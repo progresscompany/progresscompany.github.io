@@ -9,20 +9,16 @@ function fail(error){
 
 navigator.geolocation.getCurrentPosition(success, fail);
 
-//UTCをミリ秒に
-function utcTOJSTime(utctime){
-    return utctime * 1000;
-}
+
 
 
 
 //データ取得
 function ajaxRequest(lat, long){
-    const url = 'https://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+    const url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
     const appId = '0af33bed11144401';
 
     $.ajax({
-        //Access-Control-Allow-Origin: url;
         url: url,
         dataType: 'json',
         data:{
@@ -34,7 +30,6 @@ function ajaxRequest(lat, long){
         }
     })
     .done(function(data){
-        data.addHeader("Access-Control-Allow-Origin", "*");
         console.log(data);
     
     })
