@@ -211,8 +211,7 @@
             const name = forecast.Item.itemName;
             const price_h = Number(forecast.Item.itemPrice).toLocaleString();
             const price = zenkaku2Hankaku(price_h);
-            const order_h = forecast.Item.rank;
-            const order = zenkaku2Hankaku(order_h);
+            const order = forecast.Item.rank;
             const reviewAverage_h = forecast.Item.reviewAverage;
             const reviewAverage = zenkaku2Hankaku(reviewAverage_h);
             const affiliateink = forecast.Item.affiliateUrl;
