@@ -387,6 +387,10 @@ body {
   .product-item-cell{
     display: block;
   }
+  .product .order{
+    display: inline;
+    float: left;
+  }
   .product .description{
     display: block;
     padding: 10px;
