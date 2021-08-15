@@ -179,11 +179,11 @@ body {
 }
 .order{
   width: 10px;
-  font-size: 2.4rem;
+  font-size: 2.0rem;
   font-weight: bold;
   line-height: 28px;
   color: #333;
-  padding: 10px;
+  padding: 20px;
 }
 .product .image{
   display: inline-block;
@@ -360,18 +360,23 @@ body {
     line-height: 1.8;
   }
 
+  .select-item-box{
+    display: block;
+    padding: 20px;
+  }
+
   .gender-box{
-    width: 50px;
+    width: 150px;
     height: 10px;
   }
   
   .age-box{
-    width: 50px;
+    width: 150px;
     height: 10px;
   }
   
   .search-button{
-    width: 30px;
+    width: 130px;
     height: 10px;
   }
 
@@ -379,8 +384,18 @@ body {
   .product{
     width: 300px;
   }
- 
-
+  .product-item-cell{
+    display: block;
+  }
+  .product .description{
+    display: block;
+    padding: 10px;
+  }
+  .reviewAverage{
+    font-size: 1.5rem;
+    display: block;
+    padding: 10px;
+  }
   /* --- skills --- */
   .skills-wrapper,
   .skill-box {
