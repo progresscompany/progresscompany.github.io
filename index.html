@@ -20,7 +20,7 @@
     </div>
   </header>
   <section class="about" id="about">
-    <h2 class="heading">楽天市場 ランキング検索</h2>
+    <h2 class="heading">RANKING</h2>
     <div class="select-item">
       <div class="select-item-box">
         <p class="gender-name">性別（総合、男性、女性）</p>
@@ -83,11 +83,12 @@
   </section>
   <section class="contact" id="contact">
     <h2 class="heading">CONTACT</h2>
-      <form class="contact-form" method="post" action="http://www2.tba.t-com.ne.jp/cgi-bin/form.cgi" accept-charset="Shift_JIS">
+      <form class="contact-form" method="post" action="https://www2.tba.t-com.ne.jp/cgi-bin/form.cgi" accept-charset="Shift_JIS">
       <input type = "text" name="name" placeholder="NAME">
       <textarea name="message" placeholder="MESSAGE"></textarea>
       <input type="hidden" name="tomail" value="shu.19951117@yahoo.ne.jp">
       <input type="submit" value="SEND">
+      <p>※問合せフォームメンテナンス中です。お問い合わせはshu.19951117@yahoo.ne.jpまでお願いします。</p>
     </form>
   </section>
   <footer class="footer">
@@ -210,7 +211,8 @@
             const name = forecast.Item.itemName;
             const price_h = Number(forecast.Item.itemPrice).toLocaleString();
             const price = zenkaku2Hankaku(price_h);
-            const order = forecast.Item.rank;
+            const order_h = forecast.Item.rank;
+            const order = zenkaku2Hankaku(order_h);
             const reviewAverage_h = forecast.Item.reviewAverage;
             const reviewAverage = zenkaku2Hankaku(reviewAverage_h);
             const affiliateink = forecast.Item.affiliateUrl;
