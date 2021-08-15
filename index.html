@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+  <title>商品紹介</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header">
+    <p class="site-title-sub">progress company</p>
+    <h1 class="site-title">Rakuten Ranking Tool</h1>
+    <p class="site-description">Created by SHU</p>
+    <div class="buttons">
+      <a class="button" href="#about">RANKING</a>
+      <a class="button button-showy" href="#contact">SEND MESSAGE</a>
+    </div>
+  </header>
+  <section class="about" id="about">
+    <h2 class="heading">楽天市場 ランキング検索</h2>
+    <div class="select-item">
+      <div class="select-item-box">
+        <p class="gender-name">性別（総合、男性、女性）</p>
+          <select id="gender_select" class="gender-box" name="gender">
+            <option value="gender_total">総合</option>
+            <option value="gender_male">男性</option>
+            <option value="gender_female">女性</option>
+          </select>
+      </div>
+      <div class="select-item-box">
+        <p class="gender-name">年代（総合、１０-４０代、５０代以上）</p>
+          <select id="age_select" class="age-box" name="age">
+            <option value="age_total">総合</option>
+            <option value="age_10">１０代</option>
+            <option value="age_20">２０代</option>
+            <option value="age_30">３０代</option>
+            <option value="age_40">４０代</option>
+            <option value="age_50">５０代以上</option>
+          </select>
+      </div>
+      <div class="select-item-box">
+        <p class="gender-name">性別・年代を設定後に検索</p>
+          <input class="search-button" type="submit" value="検索">
+      </div>
+    </div>
+  </section>
+  <section class="product" id="product">
+    
+  </section>
+
+  <section class="skills">
+    <h2 class="heading">自己紹介</h2>
+    <div class="skills-wrapper">
+      <div class="skill-box">
+        <i class="skill-icon fa fa-graduation-cap"></i>
+        <div class="skill-title">経歴</div>
+        <p class="skill-text">
+          埼玉県出身の２５歳<br>
+          大学卒後にメーカーの技術職に就職<br>
+        </p>
+      </div>
+      <div class="skill-box">
+        <i class="skill-icon fa fa-paint-brush"></i>
+        <div class="skill-title">趣味</div>
+        <p class="skill-text">
+          読書（毎月4冊程度読んでいます）<br>
+          プロ野球観戦<br>
+          お酒
+        </p>
+      </div>
+      <div class="skill-box">
+        <i class="skill-icon fa fa-star"></i>
+        <div class="skill-title">目標</div>
+        <p class="skill-text">
+          月収１００万円を稼ぐ！<br>
+          都内にタワーマンションを購入する！<br>
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="contact" id="contact">
+    <h2 class="heading">CONTACT</h2>
+      <form class="contact-form" method="post" action="http://www2.tba.t-com.ne.jp/cgi-bin/form.cgi" accept-charset="Shift_JIS">
+      <input type = "text" name="name" placeholder="NAME">
+      <textarea name="message" placeholder="MESSAGE"></textarea>
+      <input type="hidden" name="tomail" value="shu.19951117@yahoo.ne.jp">
+      <input type="submit" value="SEND">
+    </form>
+  </section>
+  <footer class="footer">
+    @ progress company
+  </footer>
+
+  <script src="jquery-3.4.1.min.js"></script>
+
+  <script>
+    'use strict'
+//半角→全角変換（価格、レビュー平均）
+    function zenkaku2Hankaku(str) {
+    return str.replace(/[A-Za-z0-9]/g, function(s) {
+        return String.fromCharCode(s.charCodeAt(0) + 0xFEE0);
+    });
+}
+
+//データ取得
+    const url = 'https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628';
+    const appId = '1065666727137661273';
+    const affiliateId = '20f77d9d.61b16e12.20f77d9e.a7cef807';
+    let gender=undefined;
+    let age=undefined;
+    
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data:{
+            applicationId: appId,
+            affiliateId: affiliateId,
+            sex: gender,
+            age: age
+        }
+    })
+
+    .done(function(data){
+        console.log(data);
+        
+        data.Items.forEach(function(forecast, index){
+            const img1 = forecast.Item.mediumImageUrls[0].imageUrl;
+            const name = forecast.Item.itemName;
+            const price_h = Number(forecast.Item.itemPrice).toLocaleString();
+            const price = zenkaku2Hankaku(price_h);
+            const order = forecast.Item.rank;
+            const reviewAverage_h = forecast.Item.reviewAverage;
+            const reviewAverage = zenkaku2Hankaku(reviewAverage_h);
+            const affiliateink = forecast.Item.affiliateUrl;
+            
+            const table = `
+            <a href="${affiliateink}" id="No1_url" target="_blank">
+            <div class="product-item">
+              <p class="order product-item-cell">${order}位</p>
+              <div class="image product-item-cell"><img src="${img1}"></div>
+              <div class="product-item-cell">
+              <div class="category">${name}</div>
+                <span class="description">¥${price}</span>
+                <p class="reviewAverage">レビュー平均：${reviewAverage}／５．００</p>
+              </div>
+            </div>
+            </a>
+            `;
+            $('#product').append(table);
+        }
+        )
+
+    })
+
+    .fail(function(){
+        console.log('$.ajax failed!');
+    })
+
+    //ランキング表示変更
+    $(document).ready(function(){
+    $('.search-button').on('click',function(){
+    
+    var gender_select = $("#gender_select").children("option:selected"); 
+    var gender_Text = gender_select.text();
+    var age_select = $("#age_select").children("option:selected"); 
+    var age_Text = age_select.text();
+
+    if(gender_Text==="総合"){
+      gender=undefined;
+    }else if(gender_Text==="男性"){
+      gender=0;
+    }else if(gender_Text==="女性"){
+      gender=1;
+    }
+
+    if(age_Text==="総合"){
+      age=undefined;
+    }else if(age_Text==="１０代"){
+      age=10;
+    }else if(age_Text==="２０代"){
+      age=20;
+    }else if(age_Text==="３０代"){
+      age=30;
+    }else if(age_Text==="４０代"){
+      age=40;
+    }else if(age_Text==="５０代以上"){
+      age=50;
+    }
+
+      $("#product").empty();
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        data:{
+            applicationId: appId,
+            affiliateId: affiliateId,
+            sex: gender,
+            age: age
+        }
+    })
+
+    .done(function(data){
+        console.log(data);
+        
+        data.Items.forEach(function(forecast, index){
+            const img1 = forecast.Item.mediumImageUrls[0].imageUrl;
+            const name = forecast.Item.itemName;
+            const price_h = Number(forecast.Item.itemPrice).toLocaleString();
+            const price = zenkaku2Hankaku(price_h);
+            const order = forecast.Item.rank;
+            const reviewAverage_h = forecast.Item.reviewAverage;
+            const reviewAverage = zenkaku2Hankaku(reviewAverage_h);
+            const affiliateink = forecast.Item.affiliateUrl;
+            
+            const table = `
+            <a href="${affiliateink}" id="No1_url" target="_blank">
+            <div class="product-item">
+              <p class="order product-item-cell">${order}位</p>
+              <div class="image product-item-cell"><img src="${img1}"></div>
+              <div class="product-item-cell">
+              <div class="category">${name}</div>
+                <p class="description">¥${price}円</p>
+                <p class="reviewAverage">レビュー平均：${reviewAverage}／５．００</p>
+              </div>
+            </div>
+            </a>
+            `;
+            $('#product').append(table);
+        }
+        )
+
+    })
+
+    });
+    });
+
+  </script>
+
+</body>
+</html>
